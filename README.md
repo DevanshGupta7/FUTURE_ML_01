@@ -3,8 +3,7 @@ A complete end-to-end machine learning and forecasting project built using Power
 
 Here is a clean, professional summary written exactly as a **Machine Learning Engineer** would document a GitHub project.
 
-
-
+***
 
 # 📊 AI-Powered Dynamic Sales Forecasting Dashboard
 Power BI + Python Prophet + Superstore Dataset
@@ -20,41 +19,44 @@ Unlike traditional dashboards that rely on static CSVs, this project performs dy
 Whenever the user updates parameters (Region, Date Range, Forecast Horizon), Power BI sends the filtered dataset to Python → Prophet retrains → forecasts return to Power BI → visuals update automatically.
 
 
+
 ## 🚀 Key Features
 🔄 **Dynamic Machine Learning**
 
-* Power BI dynamically calls Python via Python.Execute()
+* Power BI dynamically calls Python via ```Python.Execute()```
 * Prophet trains a new forecasting model on every refresh
 * Forecasts adapt to selected:
-* Region
-* Start Date / End Date
-* Forecast Horizon (months)
+  * Region
+  * Start Date / End Date
+  * Forecast Horizon (months)
 
 🗂️ **Multiple Forecasting Modes**
 
-1. Region-wise forecasting
-2. Date-range forecasting
-3. Monthly aggregation of sales
-4. Confidence intervals (upper/lower forecast)
+* Region-wise forecasting
+* Date-range forecasting
+* Monthly aggregation of sales
+* Confidence intervals (upper/lower forecast)
 
 📈 **Interactive Dashboard (PBIX Included)**
 
 The dashboard contains:
-1. Actual vs Forecast comparison
-2. Region-wise sales trend
-3. Monthly and seasonal patterns
-4. KPI Cards (Actual Sales, Forecast Sales, YoY)
-5. Forecast uncertainty bounds
+* Actual vs Forecast comparison
+* Region-wise sales trend
+* Monthly and seasonal patterns
+* KPI Cards (Actual Sales, Forecast Sales, YoY)
+* Forecast uncertainty bounds
 
 🧠 **Prophet Model Features**
 
-1. Yearly seasonality
-2. Automatic trend detection
-3. Support for custom horizon
-4. Works on aggregated monthly sales
+* Yearly seasonality
+* Automatic trend detection
+* Support for custom horizon
+* Works on aggregated monthly sales
 
+***
 
 ## 🏗️ Repository Structure
+```
 AI-Sales-Forecasting-Dashboard/
 │
 ├── data/
@@ -81,55 +83,47 @@ AI-Sales-Forecasting-Dashboard/
 │
 ├── LICENSE                              # Project license (MIT recommended)
 └── README.md
+```
 
+***
 
 ## 🔧 How the System Works (Architecture)
 1️⃣ Power Query Filters Superstore & Calls Python
 
-SalesForecastDynamic.m sends data + parameters to:
-
-Python.Execute(...)
+```SalesForecastDynamic.m``` sends data + parameters to:
+* ```Python.Execute(...)```
 
 2️⃣ Python Script Runs Prophet
 
-Aggregates sales monthly
-
-Trains Prophet
-
-Generates forecast for N months
-
-Returns:
-
-| ds | actual_sales | forecast_sales | forecast_lower | forecast_upper | Region |
+* Aggregates sales monthly
+* Trains Prophet
+* Generates forecast for N months
+* Returns:
+  * ```| ds | actual_sales | forecast_sales | forecast_lower | forecast_upper | Region |```
 
 3️⃣ Power BI Visuals Update
 
 All graphs now use the freshly computed forecast.
 
 📌 Important Files & Their Role
+
 🔹 powerbi/SalesForecastDashboard.pbix
 
 The main dashboard containing:
 
-All visuals
-
-Parameter bindings
-
-Dynamic forecast line charts
-
-KPI summary cards
+* All visuals
+* Parameter bindings
+* Dynamic forecast line charts
+* KPI summary cards
 
 🔹 powerbi/SalesForecastDynamic.m
 
 Power Query script that handles:
 
-Date filtering
-
-Region filtering
-
-Calling Python
-
-Receiving forecast table
+* Date filtering
+* Region filtering
+* Calling Python
+* Receiving forecast table
 
 🔹 powerbi/pythonSalesForecastDynamic.py
 
@@ -140,103 +134,96 @@ The Python script executed inside Power BI, extracted for readability.
 
 A standalone Python version for:
 
-Offline testing
+* Offline testing
+* Model debugging
+* Development without Power BI
 
-Model debugging
-
-Development without Power BI
+***
 
 ## 🐍 Python Forecasting Logic (Summary)
 
 Steps performed inside Python:
 
-1. Convert Order Date → datetime
+* Convert Order Date → datetime
+* Filter by region + date
+* Aggregate sales → monthly
+* Train Prophet model:
 
-2. Filter by region + date
+  ```
+  m = Prophet(yearly_seasonality=True)
+  m.fit(ts)
+  ```
+* Generate future dates
+* Predict:
+  ```
+  forecast[['yhat', 'yhat_lower', 'yhat_upper']]
+  ```
+* Merge history + forecast
+* Return ```result``` DataFrame to Power BI
 
-3. Aggregate sales → monthly
-
-4. Train Prophet model:
-m = Prophet(yearly_seasonality=True)
-m.fit(ts)
-
-5. Generate future dates
-
-6. Predict:
-forecast[['yhat', 'yhat_lower', 'yhat_upper']]
-
-7. Merge history + forecast
-
-8. Return result DataFrame to Power BI
-
+***
 
 ## 🖥️ How to Run This Project on Your Machine
-1. Install Requirements
 
-Python 3.10+
+* Install Requirements
+   
+  * Python 3.10+
+  * Prophet
+  * Power BI Desktop
 
-Prophet
+  Install Prophet:
+  ```
+  pip install prophet pandas numpy
+  ```
 
-Power BI Desktop
+* Configure Power BI Python
 
-Install Prophet:
+  Power BI → File → Options → Python Scripting → Select your Python installation.
 
-pip install prophet pandas numpy
+* Open Dashboard
 
-2. Configure Power BI Python
+  Open:
+  ```
+  powerbi/SalesForecastDashboard.pbix
+  ```
 
-Power BI →
-File → Options → Python Scripting → Select your Python installation.
+* Change Parameters
 
-3. Open Dashboard
+  Inside Power Query →
+  Manage Parameters → Region / Dates / Horizon
+  
+  Click Close & Apply → Power BI runs Prophet → dashboard updates.
 
-Open:
-
-powerbi/SalesForecastDashboard.pbix
-
-4. Change Parameters
-
-Inside Power Query →
-Manage Parameters → Region / Dates / Horizon
-
-Click Close & Apply → Power BI runs Prophet → dashboard updates.
-
+***
 
 ## 📸 Dashboard Preview
 <img width="1412" height="792" alt="Screenshot 2025-12-12 115038" src="https://github.com/user-attachments/assets/8e3089bd-eca0-4d36-8a22-7cac08fa9290" />
 
+***
 
 ## 🎯 Project Goals
 
 This project demonstrates:
 
-Integration of ML models directly inside BI tools
+* Integration of ML models directly inside BI tools
+* Dynamic forecasting without external CSVs
+* Clean modular architecture (Python + Power Query + Power BI)
+* Strong understanding of analytics engineering
+* Real-world retail forecasting use case
+* Perfect for portfolios, interviews, and internships.
 
-Dynamic forecasting without external CSVs
-
-Clean modular architecture (Python + Power Query + Power BI)
-
-Strong understanding of analytics engineering
-
-Real-world retail forecasting use case
-
-Perfect for portfolios, interviews, and internships.
-
+***
 
 ## 👤 Author
 
 Devansh Gupta
 AI Developer • Data Analyst • Power BI + Python + Automation
+
 Linkedin:- https://www.linkedin.com/in/devansh-gupta-532410339
 
+***
 
 ## 📄 License
 
 This project is licensed under the MIT License.
-See the LICENSE file for full legal text.
-
-
-
-
-
-
+See the ```LICENSE``` file for full legal text.
