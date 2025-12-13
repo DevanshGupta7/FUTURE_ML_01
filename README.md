@@ -19,7 +19,6 @@ Unlike traditional dashboards that rely on static CSVs, this project performs dy
 Whenever the user updates parameters (Region, Date Range, Forecast Horizon), Power BI sends the filtered dataset to Python → Prophet retrains → forecasts return to Power BI → visuals update automatically.
 
 
-
 ## 🚀 Key Features
 🔄 **Dynamic Machine Learning**
 
@@ -227,3 +226,4 @@ Linkedin:- https://www.linkedin.com/in/devansh-gupta-532410339
 
 This project is licensed under the MIT License.
 See the ```LICENSE``` file for full legal text.
+
